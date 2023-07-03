@@ -21,10 +21,10 @@ class CreateRoomView(APIView):
         # so, if there is no key => session must be created
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
-        # this will take all the data, serialize it and gives back the python representation of
-        # it and the check if data was vaild
+        # this will take all the data, serialize it and give back the python representation of
+        # it and the check if data was valid
         serializer = self.serializer_class(data=request.data)
-        # if data is vaild =>
+        # if data is valid =>
         if serializer.is_valid():
             quest_can_pause = serializer.data.get('quest_can_pause')
             votes_to_skip = serializer.data.get('votes_to_skip')
@@ -44,6 +44,6 @@ class CreateRoomView(APIView):
                 # if creating
                 room = Room(host=host, quest_can_pause=quest_can_pause, votes_to_skip=votes_to_skip)
                 room.save()
-            # still need to return response weather it was valid or not
+            # still need to return response whether it was valid or not
             # response must be serialized
             return Response(RoomSerializer(room).data, status=status.HTTP_200_OK)
